@@ -9,7 +9,11 @@ s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
 s.bind((HOST, PORT))
 s.listen(True)
 
+
 print("Serving HTTP on port %s..."%PORT)
+
+url= 'https://brickset.com/sets/year-2010'
+r= requests.get(url)
 
 while True:
     client_connection, client_address = s.accept()
@@ -17,20 +21,11 @@ while True:
     print(request.decode("utf-8"))
     http_response = """\
 HTTP/1.1 200 OK
-
 Welcome This is my first webpage. Great!
 """
 
     client_connection.sendall(bytes(http_response, "utf-8"))
     client_connection.close()
-
-url= 'http://www.wikipedia.org'
-r= requests.get(url)
-
-print(r.text)
-
-print("Status code:")
-print("\t*", r.status_code)
 
 h=requests.head(url)
 print("Header.")
@@ -42,17 +37,14 @@ for x in h.headers:
 print("**********")
 
 headers = {
-    'User-Agent' : 'Iphone 8'
+    'User-Agent' : 'Mobile'
 }
-url2 = "http://httpbin.org/headers"
-rh = requests.get(url2, headers=headers)
-print(rh.text)
 
 class NewSpider(scrapy.Spider):
     name = "new_spider"
-    start_urls = ["http://brickset.com/sets/year-2019"]
+    start_urls = ["http://brickset.com/sets/year-2010"]
     def parse(self, response):
-        xpath_selector = '//img'
+        xpath_selector='//img'
         for x in response.xpath(xpath_selector):
             newsel = '@src'
             yield {
