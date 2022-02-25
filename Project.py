@@ -49,5 +49,6 @@ class NewSpider(scrapy.Spider):
                 response.urljoin(next_page),
                 callback=self.parse
             )
+
 if __name__ == '__main__':
     unittest.main()
